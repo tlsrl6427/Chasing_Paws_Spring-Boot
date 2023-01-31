@@ -1,0 +1,36 @@
+@charset "UTF-8";
+#c_box{
+	width: 400px;
+	height: auto;	
+	margin: auto;
+	margin-top: 20px;
+	font-family: 'IBM Plex Sans KR', sans-serif;
+}
+
+.panel-heading{
+	font-size: x-large;
+	text-align: center;
+	font-weight: bold;
+	font-family: 'IBM Plex Sans KR', sans-serif;
+	
+}
+
+th {
+	text-align: right;
+	width: 120px;
+	font-family: 'IBM Plex Sans KR', sans-serif;
+}
+
+td {
+	text-align: left;
+	font-family: 'IBM Plex Sans KR', sans-serif;
+
+	
+}
+
+
+
+#buttons{
+	text-align: center;
+	font-family: 'IBM Plex Sans KR', sans-serif;
+}
