@@ -34,7 +34,7 @@ public class CharacterController {
     @GetMapping("/choice")
     public String character_choice(int c_idx, Model model) {
         //캐릭터 선택에서 넘어왔으면 받은 캐릭터 정보 토대로 pageScope에 추가
-        Character ex_c_vo = characterService.findOne(c_idx).get();
+        Character ex_c_vo = characterService.findOne(c_idx);
         Character main_ch = null;
 
         if(c_idx==1) {//전사

@@ -1,9 +1,6 @@
 package com.chasingpaws.sb;
 
-import com.chasingpaws.sb.repository.CharacterRepository;
-import com.chasingpaws.sb.repository.ItemRepository;
-import com.chasingpaws.sb.repository.JpaCharacterRepository;
-import com.chasingpaws.sb.repository.JpaItemRepository;
+import com.chasingpaws.sb.repository.*;
 import com.chasingpaws.sb.service.CharacterService;
 import com.chasingpaws.sb.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,20 +8,23 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.persistence.EntityManager;
+import javax.sql.DataSource;
 
 @Configuration
 public class SpringConfig {
 
-    private EntityManager em;
+    private final DataSource dataSource;
+    private final EntityManager em;
 
     @Autowired
-    public SpringConfig(EntityManager em) {
+    public SpringConfig(DataSource dataSource, EntityManager em) {
+        this.dataSource = dataSource;
         this.em = em;
     }
 
     @Bean
     public CharacterService characterService(){
-        return new CharacterService(characterRepository());
+        return new CharacterService(characterRepository(), skillRepository());
     }
 
     @Bean
@@ -39,4 +39,7 @@ public class SpringConfig {
     public ItemRepository itemRepository(){
         return new JpaItemRepository(em);
     }
+
+    @Bean
+    public SkillRepository skillRepository(){ return new JpaSkillRepository(em);}
 }

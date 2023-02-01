@@ -1,6 +1,7 @@
 package com.chasingpaws.sb.repository;
 
 import com.chasingpaws.sb.domain.Character;
+import com.chasingpaws.sb.domain.Skill;
 
 import javax.persistence.EntityManager;
 import java.util.List;

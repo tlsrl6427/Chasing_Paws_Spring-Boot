@@ -1,7 +1,9 @@
 package com.chasingpaws.sb.domain;
 
+import javax.persistence.Entity;
 import javax.persistence.Id;
 
+@Entity
 public class Skill {
 
     @Id
