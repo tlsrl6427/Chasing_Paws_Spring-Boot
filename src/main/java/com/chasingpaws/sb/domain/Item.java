@@ -2,6 +2,7 @@ package com.chasingpaws.sb.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 @Entity
 public class Item {
@@ -14,19 +15,30 @@ public class Item {
     String 	i_level;
     String 	i_img;
 
+    @Transient
     int 	i_hp;
+    @Transient
     int	i_hp_percent;
+    @Transient
     int 	i_ad;
+    @Transient
     int 	i_ad_percent;
+    @Transient
     int 	i_ap;
+    @Transient
     int 	i_ap_percent;
+    @Transient
     int 	i_armor;
+    @Transient
     int 	i_armor_percent;
+    @Transient
     int 	i_critical;
+    @Transient
     int 	i_avd;
 
-
+    @Transient
     int	i_effect;
+    @Transient
     int 	i_cookie;
 	/*
 	 	i_effect

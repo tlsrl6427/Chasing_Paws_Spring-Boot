@@ -50,7 +50,7 @@ public class CharacterController {
             main_ch.setC_auto_attack(ex_c_vo.getC_auto_attack());
             main_ch.setC_p_skill(ex_c_vo.getC_p_skill());
             main_ch.setC_img(ex_c_vo.getC_img());
-            main_ch.setSkill_vo(ex_c_vo.getSkill_vo());
+            main_ch.setSkill(ex_c_vo.getSkill());
             main_ch.setC_original_hp(ex_c_vo.getC_hp());
             main_ch.setC_auto_attack_img(ex_c_vo.getC_auto_attack_img());
             main_ch.setC_p_skill_img(ex_c_vo.getC_p_skill_img());
@@ -67,7 +67,7 @@ public class CharacterController {
             main_ch.setC_auto_attack(ex_c_vo.getC_auto_attack());
             main_ch.setC_p_skill(ex_c_vo.getC_p_skill());
             main_ch.setC_img(ex_c_vo.getC_img());
-            main_ch.setSkill_vo(ex_c_vo.getSkill_vo());
+            main_ch.setSkill(ex_c_vo.getSkill());
             main_ch.setC_original_hp(ex_c_vo.getC_hp());
             main_ch.setC_auto_attack_img(ex_c_vo.getC_auto_attack_img());
             main_ch.setC_p_skill_img(ex_c_vo.getC_p_skill_img());
@@ -84,7 +84,7 @@ public class CharacterController {
             main_ch.setC_auto_attack(ex_c_vo.getC_auto_attack());
             main_ch.setC_p_skill(ex_c_vo.getC_p_skill());
             main_ch.setC_img(ex_c_vo.getC_img());
-            main_ch.setSkill_vo(ex_c_vo.getSkill_vo());
+            main_ch.setSkill(ex_c_vo.getSkill());
             main_ch.setC_original_hp(ex_c_vo.getC_hp());
             main_ch.setC_auto_attack_img(ex_c_vo.getC_auto_attack_img());
             main_ch.setC_p_skill_img(ex_c_vo.getC_p_skill_img());
@@ -92,8 +92,8 @@ public class CharacterController {
 
 
         application.setAttribute("main_ch", main_ch);
-        model.addAttribute("stage_val", 1);
+        //model.addAttribute("stage_val", 1);
 
-        return "redirect:/shop/show";
+        return "redirect:/shop/show?stage_val=1";
     }
 }

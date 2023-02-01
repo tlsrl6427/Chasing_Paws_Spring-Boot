@@ -2,12 +2,14 @@ package com.chasingpaws.sb.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 @Entity
+@Table(name="character_info")
 public class Character {
 
     @Id
@@ -50,16 +52,24 @@ public class Character {
         item_list.add(new Item());
         item_list.add(new Item());
     }
-
+    @Transient
     int[] active_skill_level = new int[8];
+    @Transient
     int[] active_skill_remaining_turn = new int[8];
 
+    @Transient
     int damage_reduced = 0;// 받는 피해 감소
+    @Transient
     int damage_reduced_turn = 0;// 받는 피해 감소 턴수
+    @Transient
     int dot_damage = 0;// 도트뎀
+    @Transient
     int dot_damage_turn = 0;// 도트뎀 턴수
+    @Transient
     int cc_turn = 0;
+    @Transient
     public static boolean wizard_passive = false;
+    @Transient
     Random random = new Random();
 
 
@@ -358,11 +368,11 @@ public class Character {
     public void setDamage_reduced(int damage_reduced) {
         this.damage_reduced = damage_reduced;
     }
-    public List<Skill> getSkill_vo() {
+    public List<Skill> getSkill() {
         return skill;
     }
-    public void setSkill_vo(List<Skill> skill_vo) {
-        this.skill = skill_vo;
+    public void setSkill(List<Skill> skill) {
+        this.skill = skill;
     }
     public int getC_idx() {
         return c_idx;
