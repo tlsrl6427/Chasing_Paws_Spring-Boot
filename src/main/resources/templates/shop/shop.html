@@ -35,9 +35,12 @@
 	}
 
 </style>
- <!--   <script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
+
 //던전 정보 보내기
 //스테이지 넘어갈때마다 dungeon변수에 +해줘서 불러내야할 던전정보 특정하기
+    var cookie = 50;
+    var stage_val = 1;
 	$(function(){
 		$('#cookie').html("보유쿠키: " + cookie);
 		$('#total_no').val(skill_point);
@@ -78,7 +81,7 @@
 
       jQuery.ajaxSettings.traditional = true;   // 이거 추가 안 하면 parameter 넘어갈 때 %5B%5D가 추가되어서 넘어감
       $.ajax({
-         url: 'game/dungeon/dungeon.do',
+         url: '../dungeon/dungeon',
          data: {"stage_val": stage_val, "s_idx": s_idx, "s_num": s_num, "s_val": s_val},
          success: function(res_data){
             $('#disp').html(res_data);
@@ -255,8 +258,10 @@
          }
       })
    }
+
 </script>
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
+
 $("input:checkbox").click(function() {
 
     var max = $("input:checkbox:checked").length >= 4;
@@ -331,48 +336,7 @@ $("input:checkbox").click(function() {
        ////////////////스킬설명//////////////////////////////////////////////
        var skill_num = Number( $(this).prev().prev().attr('name') );
        var damage;
-       if(skill_num==1){
-          damage = ${ main_ch.skill_vo[0].s_basic_damage }
-                      +${ main_ch.skill_vo[0].s_add_damage } * $(this).val()
-                      +${ main_ch.c_ad } * ${ main_ch.skill_vo[0].s_coeff_ad }
-                      +${ main_ch.c_ap } * ${ main_ch.skill_vo[0].s_coeff_ap };
-       }else  if(skill_num==2){
-          damage = ${ main_ch.skill_vo[1].s_basic_damage }
-                   +${ main_ch.skill_vo[1].s_add_damage } * $(this).val()
-                   +${ main_ch.c_ad } * ${ main_ch.skill_vo[1].s_coeff_ad }
-                   +${ main_ch.c_ap } * ${ main_ch.skill_vo[1].s_coeff_ap };
-     }else  if(skill_num==3){
-          damage = ${ main_ch.skill_vo[2].s_basic_damage }
-          +${ main_ch.skill_vo[2].s_add_damage } * $(this).val()
-          +${ main_ch.c_ad } * ${ main_ch.skill_vo[2].s_coeff_ad }
-          +${ main_ch.c_ap } * ${ main_ch.skill_vo[2].s_coeff_ap };
-     }else  if(skill_num==4){
-          damage = ${ main_ch.skill_vo[3].s_basic_damage }
-          +${ main_ch.skill_vo[3].s_add_damage } * $(this).val()
-          +${ main_ch.c_ad } * ${ main_ch.skill_vo[3].s_coeff_ad }
-          +${ main_ch.c_ap } * ${ main_ch.skill_vo[3].s_coeff_ap };
-     }/* 버프류는 다시 생각해봐야함
-     else  if(skill_num==5){
-          damage = ${ main_ch.skill_vo[4].s_basic_damage }
-          +${ main_ch.skill_vo[4].s_add_damage } * $(this).val()
-          +${ main_ch.c_ad } * ${ main_ch.skill_vo[4].s_coeff_ad }
-          +${ main_ch.c_ap } * ${ main_ch.skill_vo[4].s_coeff_ap };
-     }else  if(skill_num==6){
-          damage = ${ main_ch.skill_vo[5].s_basic_damage }
-          +${ main_ch.skill_vo[5].s_add_damage } * $(this).val()
-          +${ main_ch.c_ad } * ${ main_ch.skill_vo[5].s_coeff_ad }
-          +${ main_ch.c_ap } * ${ main_ch.skill_vo[5].s_coeff_ap };
-     }else  if(skill_num==7){
-          damage = ${ main_ch.skill_vo[6].s_basic_damage }
-          +${ main_ch.skill_vo[6].s_add_damage } * $(this).val()
-          +${ main_ch.c_ad } * ${ main_ch.skill_vo[6].s_coeff_ad }
-          +${ main_ch.c_ap } * ${ main_ch.skill_vo[6].s_coeff_ap };
-     }else  if(skill_num==8){
-          damage = ${ main_ch.skill_vo[7].s_basic_damage }
-          +${ main_ch.skill_vo[7].s_add_damage } * $(this).val()
-          +${ main_ch.c_ad } * ${ main_ch.skill_vo[7].s_coeff_ad }
-          +${ main_ch.c_ap } * ${ main_ch.skill_vo[7].s_coeff_ap };
-     } */
+
 
        var str1 = $(this).prev().find('span').html().split("의 데미지")[0];
        var str2 = $(this).prev().find('span').html().split("의 데미지")[1];
@@ -383,7 +347,8 @@ $("input:checkbox").click(function() {
        //////////////////////////////////////////////////////////////////////
     });
     Myelement = document.getElementById('total_no');
-</script>-->
+
+</script>
 </head>
 <body>
 <div id="box">
@@ -610,7 +575,7 @@ $("input:checkbox").click(function() {
                                 <li th:text=${selected_item_list[0].i_name}></li>
                                 <li th:text=${selected_item_list[0].i_class}></li>
                                 <li th:text=${selected_item_list[0].i_category}></li>
-                                <li th:text=${selected_item_list[0].i_i_level}></li>
+                                <li th:text=${selected_item_list[0].i_level}></li>
 
                                 <li th:if="${not #strings.equals(selected_item_list[0].i_hp, '0')}" th:text="|HP ${selected_item_list[0].i_hp} 증가|"></li>
                                 <li th:if="${not #strings.equals(selected_item_list[0].i_hp_percent, '0')}" th:text="|HP ${selected_item_list[0].i_hp_percent}% 증가|"></li>
@@ -638,7 +603,7 @@ $("input:checkbox").click(function() {
                                 <li th:text=${selected_item_list[1].i_name}></li>
                                 <li th:text=${selected_item_list[1].i_class}></li>
                                 <li th:text=${selected_item_list[1].i_category}></li>
-                                <li th:text=${selected_item_list[1].i_i_level}></li>
+                                <li th:text=${selected_item_list[1].i_level}></li>
 
                                 <li th:if="${not #strings.equals(selected_item_list[1].i_hp, '0')}" th:text="|HP ${selected_item_list[1].i_hp} 증가|"></li>
                                 <li th:if="${not #strings.equals(selected_item_list[1].i_hp_percent, '0')}" th:text="|HP ${selected_item_list[1].i_hp_percent}% 증가|"></li>
@@ -666,7 +631,7 @@ $("input:checkbox").click(function() {
                                 <li th:text=${selected_item_list[2].i_name}></li>
                                 <li th:text=${selected_item_list[2].i_class}></li>
                                 <li th:text=${selected_item_list[2].i_category}></li>
-                                <li th:text=${selected_item_list[2].i_i_level}></li>
+                                <li th:text=${selected_item_list[2].i_level}></li>
 
                                 <li th:if="${not #strings.equals(selected_item_list[2].i_hp, '0')}" th:text="|HP ${selected_item_list[2].i_hp} 증가|"></li>
                                 <li th:if="${not #strings.equals(selected_item_list[2].i_hp_percent, '0')}" th:text="|HP ${selected_item_list[2].i_hp_percent}% 증가|"></li>

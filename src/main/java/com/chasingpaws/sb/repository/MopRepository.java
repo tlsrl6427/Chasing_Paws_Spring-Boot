@@ -7,8 +7,6 @@ import java.util.Optional;
 
 public interface MopRepository {
 
-    Mop save(Mop mop);
-    Optional<Mop> findById(int m_idx);
-    Optional<Mop> findByName(String m_name);
-    List<Mop> findAll();
+    Optional<Mop> findByStage(int stage_val);
+
 }
