@@ -162,7 +162,7 @@ public class DungeonController {
         model.addAttribute("original_critical", original_critical);
         model.addAttribute("background", background);
 
-        return "game/dungeon/dungeon_test_sg";
+        return "dungeon/dungeon";
     }
 
     @RequestMapping("battle/attack")

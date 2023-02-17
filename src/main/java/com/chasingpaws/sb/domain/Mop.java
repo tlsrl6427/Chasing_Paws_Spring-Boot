@@ -1,8 +1,11 @@
 package com.chasingpaws.sb.domain;
 
+import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 import java.util.Random;
 
+@Entity
 public class Mop {
 
     @Id
@@ -13,17 +16,22 @@ public class Mop {
     int     m_armor;
     String    m_skill;
     String    m_level;
-    int stage_val;
     String m_img;
+    int stage_val;
+    @Transient
     int m_original_hp;
 
-
+    @Transient
     int damage_reduced = 0;// 받는 피해 감소
+    @Transient
     int damage_reduced_turn = 0;// 받는 피해 감소 턴수
+    @Transient
     int dot_damage = 0;// 도트뎀
+    @Transient
     int dot_damage_turn = 0;// 도트뎀 턴수
+    @Transient
     int cc_turn = 0;
-
+    @Transient
     Random random = new Random();
 
     //   int blind_cc_turn = 0; // 블라인드 cc기 걸린 턴수

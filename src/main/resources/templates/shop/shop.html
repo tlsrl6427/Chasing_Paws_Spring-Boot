@@ -35,20 +35,23 @@
 	}
 
 </style>
-<script type="text/javascript" th:inline="javascript">
+<script type="text/javascript">
 
 //던전 정보 보내기
 //스테이지 넘어갈때마다 dungeon변수에 +해줘서 불러내야할 던전정보 특정하기
     var cookie = 50;
     var stage_val = 1;
+    var skill_point = 10;
+    var tn;
 	$(function(){
 		$('#cookie').html("보유쿠키: " + cookie);
 		$('#total_no').val(skill_point);
 		$('#total_no').attr('max', skill_point);
+        tn= document.getElementById("total_no");
 	})
 
 	var s_val = [];
-
+    /*
 	$("input:checkbox").click(function() {
 	    if ($("input:checkbox:checked").length == 4) {
 	       $("input:checkbox:checked").each(function(i,iVal) {
@@ -56,6 +59,7 @@
 	         });
 	    }
 	 });
+    */
 
    function dungeon(){
 
@@ -79,7 +83,9 @@
          s_num.push($(this).attr('name'));
       });
 
-      jQuery.ajaxSettings.traditional = true;   // 이거 추가 안 하면 parameter 넘어갈 때 %5B%5D가 추가되어서 넘어감
+      //jQuery.ajaxSettings.traditional = true;   // 이거 추가 안 하면 parameter 넘어갈 때 %5B%5D가 추가되어서 넘어감
+      location.href = '../dungeon/dungeon?stage_val=' + stage_val + "&s_idx=" + s_idx + "&s_num=" + s_num + "&s_val=" + s_val;
+      /*
       $.ajax({
          url: '../dungeon/dungeon',
          data: {"stage_val": stage_val, "s_idx": s_idx, "s_num": s_num, "s_val": s_val},
@@ -87,6 +93,7 @@
             $('#disp').html(res_data);
          }
       })
+      */
    }
 
    function item_buy(t){
@@ -260,27 +267,25 @@
    }
 
 </script>
-<script type="text/javascript" th:inline="javascript">
+<script type="text/javascript">
 
-$("input:checkbox").click(function() {
 
-    var max = $("input:checkbox:checked").length >= 4;
-
+    $(document).on('click','input:checkbox',function(){
+        var max = $("input:checkbox:checked").length >= 4;
        $("input:checkbox").not(":checked").attr("disabled",max);
     });
 
-    var Myelement = document.getElementById('total_no');
 
-    $("input:checkbox").change(function() {
 
+    $(document).on('change','input:checkbox',function(){
        $(this).siblings().prop('disabled', false);
 
 
-       if (Myelement.value == 0) {
+       if (tn.value == 0) {
           alert('스킬 포인트를 모두 소진하였습니다.');
           $(this).prop("checked", false);
        } else {
-          Myelement.value = Number(Myelement.value) - 1;
+          tn.value = Number(tn.value) - 1;
           Number($(this).next().next().val(Number($(this).next().next().val()) + 1));
        }
 
@@ -296,17 +301,16 @@ $("input:checkbox").click(function() {
                 var temp = 0;
                 temp = Number($(this).next().next().val());
                 console.log(temp);
-                console.log(Number(Myelement.value));
-                Myelement.value = Number(Myelement.value) + temp;
+                console.log(Number(tn.value));
+                tn.value = Number(tn.value) + temp;
                 $(this).next().next().val(0);
              }
 
         });
+    });
 
-   });
-
-    $("input[type=number]").bind('keyup input', function(){
-       var num = 0;
+    $(document).on('keyup input','input[type=number]',function(){
+        var num = 0;
        var t_num = 0;
 
        if($(this).val()==0){
@@ -323,30 +327,15 @@ $("input:checkbox").click(function() {
            num = num + Number($(a).val());
         }
 
-       Myelement.value = skill_point - num;
+       tn.value = skill_point - num;
 
-       if (Myelement.value < 0) {
-           Myelement.value++;
+       if (tn.value < 0) {
+           tn.value++;
            $(this).val($(this).val() - 1);
            alert('스킬포인트를 모두 소진하였습니다.');
            return false;
         }
-
-
-       ////////////////스킬설명//////////////////////////////////////////////
-       var skill_num = Number( $(this).prev().prev().attr('name') );
-       var damage;
-
-
-       var str1 = $(this).prev().find('span').html().split("의 데미지")[0];
-       var str2 = $(this).prev().find('span').html().split("의 데미지")[1];
-       var str = str1.replace( str1.substring( str1.lastIndexOf(" ")+1, ) , damage);
-      console.log(str);
-      console.log(str2);
-       $(this).prev().find('span').html(str+"의 데미지" +str2);
-       //////////////////////////////////////////////////////////////////////
     });
-    Myelement = document.getElementById('total_no');
 
 </script>
 </head>
@@ -369,7 +358,7 @@ $("input:checkbox").click(function() {
                     <td colspan="10" id="skill_check">
                         <div id="skill_left">
                             <div>
-                                <input id="skill" type="checkbox" th:field="${main_ch.skill[0].s_num}" th:value="${main_ch.skill[0].s_idx}" >
+                                <input id="skill" type="checkbox" th:name="${main_ch.skill[0].s_num}" th:value="${main_ch.skill[0].s_idx}" >
                                 <span class="tooltip" th:text="${main_ch.skill[0].s_name}">
                            <span class="tooltiptext" th:text=${main_ch.skill[0].s_name}></span>
                         </span>
@@ -377,7 +366,7 @@ $("input:checkbox").click(function() {
                             </div>
 
                             <div>
-                                <input id="skill" type="checkbox" th:field="${main_ch.skill[2].s_num}" th:value="${main_ch.skill[2].s_idx}" >
+                                <input id="skill" type="checkbox" th:name="${main_ch.skill[2].s_num}" th:value="${main_ch.skill[2].s_idx}" >
                                 <span class="tooltip" th:text=${main_ch.skill[2].s_name}>
                            <span class="tooltiptext" th:text=${main_ch.skill[0].s_name}></span>
                         </span>
@@ -385,14 +374,14 @@ $("input:checkbox").click(function() {
                             </div>
 
                             <div>
-                                <input id="skill" type="checkbox" th:field="${main_ch.skill[4].s_num}" th:value="${main_ch.skill[4].s_idx}" >
+                                <input id="skill" type="checkbox" th:name="${main_ch.skill[4].s_num}" th:value="${main_ch.skill[4].s_idx}" >
                                 <span class="tooltip" th:text=${main_ch.skill[4].s_name}>
 	                           <span class="tooltiptext" th:text=${main_ch.skill[0].s_name}></span>
 	                        </span>
                                 <input type="number" class="s_n" id="skill_no" name="skill_no3" min="0" max="10" value="0" disabled><br><br>
                             </div>
                             <div>
-                                <input id="skill" type="checkbox" th:field="${main_ch.skill[6].s_num}" th:value="${main_ch.skill[6].s_idx}" >
+                                <input id="skill" type="checkbox" th:name="${main_ch.skill[6].s_num}" th:value="${main_ch.skill[6].s_idx}" >
                                 <span class="tooltip" th:text=${main_ch.skill[6].s_name}>
 	                           <span class="tooltiptext" ${main_ch.skill[6].s_info}></span>
 	                        </span>
@@ -402,28 +391,28 @@ $("input:checkbox").click(function() {
 
                         <div id="skill_right">
                             <div>
-                                <input id="skill" type="checkbox" th:field="${main_ch.skill[1].s_num}" th:value="${main_ch.skill[1].s_idx}" >
+                                <input id="skill" type="checkbox" th:name="${main_ch.skill[1].s_num}" th:value="${main_ch.skill[1].s_idx}" >
                                 <span class="tooltip" th:text=${main_ch.skill[1].s_name}>
 	                           <span class="tooltiptext" ${main_ch.skill[1].s_info}></span>
 	                        </span>
                                 <input type="number" id="skill_no" name="skill_no5" min="0" max="10" value="0" disabled><br><br>
                             </div>
                             <div>
-                                <input id="skill" type="checkbox" th:field="${main_ch.skill[3].s_num}" th:value="${main_ch.skill[3].s_idx}" >
+                                <input id="skill" type="checkbox" th:name="${main_ch.skill[3].s_num}" th:value="${main_ch.skill[3].s_idx}" >
                                 <span class="tooltip" th:text=${main_ch.skill[3].s_name}>
 	                           <span class="tooltiptext" ${main_ch.skill[3].s_info}></span>
 	                        </span>
                                 <input type="number" id="skill_no" name="skill_no6" min="0" max="10" value="0" disabled><br><br>
                             </div>
                             <div>
-                                <input id="skill" type="checkbox" th:field="${main_ch.skill[5].s_num}" th:value="${main_ch.skill[5].s_idx}" >
+                                <input id="skill" type="checkbox" th:name="${main_ch.skill[5].s_num}" th:value="${main_ch.skill[5].s_idx}" >
                                 <span class="tooltip" th:text=${main_ch.skill[5].s_name}>
 	                           <span class="tooltiptext" ${main_ch.skill[5].s_info}></span>
 	                        </span>
                                 <input type="number" id="skill_no" name="skill_no7" min="0" max="10" value="0" disabled><br><br>
                             </div>
                             <div>
-                                <input id="skill" type="checkbox" th:field="${main_ch.skill[7].s_num}" th:value="${main_ch.skill[7].s_idx}" >
+                                <input id="skill" type="checkbox" th:name="${main_ch.skill[7].s_num}" th:value="${main_ch.skill[7].s_idx}" >
                                 <span class="tooltip" th:text=${main_ch.skill[7].s_name}>
 	                           <span class="tooltiptext" ${main_ch.skill[7].s_info}></span>
 	                        </span>
