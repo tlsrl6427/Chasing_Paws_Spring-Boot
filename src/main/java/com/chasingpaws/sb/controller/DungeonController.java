@@ -143,9 +143,9 @@ public class DungeonController {
 
         int original_critical = main_ch.getC_critical();
         String background = null;
-        if(stage_val < 5) background = "resources/img/game_bg_1.png";
-        else if(stage_val < 9) background = "resources/img/game_bg_2.png";
-        else background = "resources/img/game_bg_3.png";
+        if(stage_val < 5) background = "game_bg_1.png";
+        else if(stage_val < 9) background = "game_bg_2.png";
+        else background = "game_bg_3.png";
 
         application.setAttribute("mop", mop);
         application.setAttribute("main_ch", main_ch);
@@ -165,7 +165,7 @@ public class DungeonController {
         return "dungeon/dungeon";
     }
 
-    @RequestMapping("battle/attack")
+    @RequestMapping("battle")
     @ResponseBody
     public Map battle_attack(int s_idx) {
 
